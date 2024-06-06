@@ -99,7 +99,8 @@ void configCANFilters(CAN_HandleTypeDef* canHandle){	//Without filtered any CAN 
     }
 }
 
-uint32_t fifo0=0,fifo1=0;
+volatile int32_t fifo0=0;
+volatile int32_t fifo1=0;
 char globalmsg[128];	//transfer msgs to string
 int msg_len;
 TickType_t failed = 0;
@@ -484,6 +485,7 @@ void StartDefaultTask(void const * argument)
   const uint16_t buffSize = 3000; // 72% busload for 3.5 mins (520k messages, 2 repro), 68% busload for 4 mins, 87% busload for 2 mins (360k messages, 2 repro)
   uint8_t buffer[buffSize];
   memset(buffer, 0, buffSize*sizeof(uint8_t));
+  const uint8_t logging_line_len = 34;
 
   while (res == FR_INVALID_NAME) {
 	  sprintf(filename, "LOGS%d.TXT", (int) fileidx);
@@ -518,11 +520,11 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  for (uint16_t loop = 0; loop < buffSize/34; loop++)
+	  for (uint16_t loop = 0; loop < buffSize/logging_line_len; loop++)
 	  {
 		  if (xQueueReceive(CanMsgQueue, &rxMsg, 100) == pdTRUE)
 		  {
-			  sprintf(&buffer[loop*27], "%08lXx%08lX%02X%02X%02X%02X%02X%02X%02X%02X\n", xTaskGetTickCount(), rxMsg.id, rxMsg.data[0], rxMsg.data[1], rxMsg.data[2], rxMsg.data[3], rxMsg.data[4], rxMsg.data[5], rxMsg.data[6], rxMsg.data[7]);
+			  sprintf(&buffer[loop*logging_line_len], "%08lXx%08lX%02X%02X%02X%02X%02X%02X%02X%02X\n", xTaskGetTickCount(), rxMsg.id, rxMsg.data[0], rxMsg.data[1], rxMsg.data[2], rxMsg.data[3], rxMsg.data[4], rxMsg.data[5], rxMsg.data[6], rxMsg.data[7]);
 			  fifo1--;
 		  }
 		  else
@@ -538,7 +540,7 @@ void StartDefaultTask(void const * argument)
 		  sprintf(debug, "failed: %lu %lu\r\n", failed, failedNum);
 		  HAL_UART_Transmit(&huart1, debug, strlen(debug), 100);
 	  }
-	  sprintf(debug, "can: %lu %lu\r\n", fifo0, fifo1);
+	  sprintf(debug, "can: %ld %ld\r\n", fifo0, fifo1);
 	  HAL_UART_Transmit(&huart1, debug, strlen(debug), 100);
 
   }

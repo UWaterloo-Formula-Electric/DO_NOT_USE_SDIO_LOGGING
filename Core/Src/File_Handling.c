@@ -279,20 +279,20 @@ FRESULT Create_File (char *name)
 
 		}
 
-		fresult = f_sync(&fil);
+//		fresult = f_sync(&fil);
 //		fresult = f_close(&fil);
-		if (fresult != FR_OK)
-		{
-			char buf[100];
-			sprintf (buf, "ERROR No. %d in closing file *%s*\n\n", fresult, name);
-			Send_Uart(buf);
-		}
-		else
-		{
-			char buf[100];
-			sprintf (buf, "File *%s* CLOSED successfully\n", name);
-			Send_Uart(buf);
-		}
+//		if (fresult != FR_OK)
+//		{
+//			char buf[100];
+//			sprintf (buf, "ERROR No. %d in closing file *%s*\n\n", fresult, name);
+//			Send_Uart(buf);
+//		}
+//		else
+//		{
+//			char buf[100];
+//			sprintf (buf, "File *%s* CLOSED successfully\n", name);
+//			Send_Uart(buf);
+//		}
 	}
     return fresult;
 }
@@ -302,39 +302,35 @@ FRESULT Create_File (char *name)
 FRESULT Update_File (char *name, char *data)
 {
 	/**** check whether the file exists or not ****/
-	fresult = f_stat (name, &fno);
-	if (fresult != FR_OK)
-	{
+//	fresult = f_stat (name, &fno);
+//	if (fresult != FR_OK)
+//	{
 //		char buf[100];
 //		sprintf (buf, "ERROR!!! *%s* does not exists\n\n", name);
 //		Send_Uart (buf);
-//		free(buf);
-	    return fresult;
-	}
-
-	else
-	{
+//	    return fresult;
+//	}
+//	else
+//	{
 		 /* Create a file with read write access and open it */
-	    fresult = f_open(&fil, name, FA_OPEN_APPEND | FA_WRITE);
-	    if (fresult != FR_OK)
-	    {
-//	    	char buf[100];
-//	    	sprintf (buf, "ERROR!!! No. %d in opening file *%s*\n\n", fresult, name);
-//	    	Send_Uart(buf);
-//	        free(buf);
-	        return fresult;
-	    }
+//	    fresult = f_open(&fil, name, FA_OPEN_APPEND | FA_WRITE);
+//	    if (fresult != FR_OK)
+//	    {
+////	    	char buf[100];
+////	    	sprintf (buf, "ERROR!!! No. %d in opening file *%s*\n\n", fresult, name);
+////	    	Send_Uart(buf);
+////	        free(buf);
+//	        return fresult;
+//	    }
 
 	    /* Writing text */
 	    fresult = f_write(&fil, data, strlen (data), &bw);
 	    if (fresult != FR_OK)
 	    {
-//	    	char buf[100];
-//	    	sprintf (buf, "ERROR!!! No. %d in writing file *%s*\n\n", fresult, name);
-//	    	Send_Uart(buf);
-//	    	free(buf);
+	    	char buf[100];
+	    	sprintf (buf, "ERROR!!! No. %d in writing file *%s*\n\n", fresult, name);
+	    	Send_Uart(buf);
 	    }
-
 	    else
 	    {
 //	    	char buf[100];
@@ -344,22 +340,21 @@ FRESULT Update_File (char *name, char *data)
 	    }
 
 	    /* Close file */
-	    fresult = f_close(&fil);
+	    fresult = f_sync(&fil);
 	    if (fresult != FR_OK)
 	    {
-//	    	char buf[100];
-//	    	sprintf (buf, "ERROR!!! No. %d in closing file *%s*\n\n", fresult, name);
-//	    	Send_Uart(buf);
-//	    	free(buf);
+	    	char buf[100];
+	    	sprintf (buf, "ERROR!!! No. %d in closing file *%s*\n\n", fresult, name);
+	    	Send_Uart(buf);
 	    }
-	    else
-	    {
+//	    else
+//	    {
 //	    	char buf[100];
 //	    	sprintf (buf, "File *%s* CLOSED successfully\n", name);
 //	    	Send_Uart(buf);
 //	    	free(buf);
-	     }
-	}
+//	     }
+//	}
     return fresult;
 }
 

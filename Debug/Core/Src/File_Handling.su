@@ -6,7 +6,7 @@
 ../Core/Src/File_Handling.c:134:9:Write_File	120	static
 ../Core/Src/File_Handling.c:192:9:Read_File	120	static
 ../Core/Src/File_Handling.c:259:9:Create_File	120	static
-../Core/Src/File_Handling.c:302:9:Update_File	16	static
-../Core/Src/File_Handling.c:366:9:Remove_File	120	static
-../Core/Src/File_Handling.c:398:9:Create_Dir	120	static
-../Core/Src/File_Handling.c:416:6:Check_SD_Space	16	static
+../Core/Src/File_Handling.c:302:9:Update_File	120	static
+../Core/Src/File_Handling.c:361:9:Remove_File	120	static
+../Core/Src/File_Handling.c:393:9:Create_Dir	120	static
+../Core/Src/File_Handling.c:411:6:Check_SD_Space	16	static
