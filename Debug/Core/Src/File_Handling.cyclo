@@ -3,10 +3,10 @@
 ../Core/Src/File_Handling.c:49:6:Unmount_SD	2
 ../Core/Src/File_Handling.c:57:9:Scan_SD	7
 ../Core/Src/File_Handling.c:100:9:Format_SD	6
-../Core/Src/File_Handling.c:134:9:Write_File	5
-../Core/Src/File_Handling.c:193:9:Read_File	5
-../Core/Src/File_Handling.c:261:9:Create_File	4
-../Core/Src/File_Handling.c:304:9:Update_File	3
-../Core/Src/File_Handling.c:368:9:Remove_File	3
-../Core/Src/File_Handling.c:403:9:Create_Dir	2
-../Core/Src/File_Handling.c:423:6:Check_SD_Space	1
+../Core/Src/File_Handling.c:134:9:Write_File	3
+../Core/Src/File_Handling.c:192:9:Read_File	5
+../Core/Src/File_Handling.c:259:9:Create_File	4
+../Core/Src/File_Handling.c:302:9:Update_File	3
+../Core/Src/File_Handling.c:366:9:Remove_File	3
+../Core/Src/File_Handling.c:398:9:Create_Dir	2
+../Core/Src/File_Handling.c:416:6:Check_SD_Space	1

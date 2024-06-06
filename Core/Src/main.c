@@ -442,34 +442,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void prvGetRegistersFromStack( uint32_t *pulFaultStackAddress )
-{
-/* These are volatile to try and prevent the compiler/linker optimising them
-away as the variables never actually get used.  If the debugger won't show the
-values of the variables, make them global my moving their declaration outside
-of this function. */
-volatile uint32_t r0;
-volatile uint32_t r1;
-volatile uint32_t r2;
-volatile uint32_t r3;
-volatile uint32_t r12;
-volatile uint32_t lr; /* Link register. */
-volatile uint32_t pc; /* Program counter. */
-volatile uint32_t psr;/* Program status register. */
 
-    r0 = pulFaultStackAddress[ 0 ];
-    r1 = pulFaultStackAddress[ 1 ];
-    r2 = pulFaultStackAddress[ 2 ];
-    r3 = pulFaultStackAddress[ 3 ];
-
-    r12 = pulFaultStackAddress[ 4 ];
-    lr = pulFaultStackAddress[ 5 ];
-    pc = pulFaultStackAddress[ 6 ];
-    psr = pulFaultStackAddress[ 7 ];
-
-    /* When the following line is hit, the variables contain the register values. */
-    for( ;; );
-}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -523,29 +496,29 @@ void StartDefaultTask(void const * argument)
   uint8_t debug[100];
   configCANFilters(&hcan1);
   if (HAL_CAN_Start(&hcan1) != HAL_OK) {
-         uint8_t msg[] = "Failed to start CAN!\n";
-         HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
-     return HAL_ERROR;
+	 uint8_t msg[] = "Failed to start CAN!\n";
+	 HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
+	 while (1);
    }
 
    if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
    {
-         uint8_t msg[] = "Error starting to listen for CAN msgs from FIFO0\n";
-         HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
-       return HAL_ERROR;
+	 uint8_t msg[] = "Error starting to listen for CAN msgs from FIFO0\n";
+	 HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
+	 while (1);
    }
 
    if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
    {
-         uint8_t msg[] = "Error starting to listen for CAN msgs from FIFO0\n";
-         HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
-       return HAL_ERROR;
+	 uint8_t msg[] = "Error starting to listen for CAN msgs from FIFO0\n";
+	 HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
+	 while (1);
    }
 
   /* Infinite loop */
   for(;;)
   {
-	  for (uint16_t loop = 0; loop < buffSize/27; loop++)
+	  for (uint16_t loop = 0; loop < buffSize/34; loop++)
 	  {
 		  if (xQueueReceive(CanMsgQueue, &rxMsg, 100) == pdTRUE)
 		  {
